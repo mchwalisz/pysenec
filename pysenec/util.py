@@ -2,8 +2,7 @@ from struct import unpack
 
 
 def parse_value(value: str):
-    """Parses numeric values, Senec supplies them as hex.
-    """
+    """Parses numeric values, Senec supplies them as hex."""
     try:
         key, value = value.split("_")
     except ValueError:
