@@ -5,9 +5,7 @@ from .util import parse
 
 
 class Senec:
-    """Senec Home Battery Sensor
-
-    """
+    """Senec Home Battery Sensor"""
 
     def __init__(self, host, websession):
         self.host = host
