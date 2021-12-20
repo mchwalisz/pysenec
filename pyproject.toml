@@ -6,11 +6,12 @@ authors = ["Mikołaj Chwalisz <m.chwalisz@gmail.com>"]
 license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-aiohttp = "^3.6.2"
+python = "^3.7"
+aiohttp = "^3.8.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.4.1"
+pytest = "^6.2.5"
+pytest-vcr = "^1.0.2"
 
 [tool.poetry.scripts]
 senec = "pysenec.cli:main"
