@@ -10,7 +10,10 @@ import pysenec
 async def run(host, verbose=False):
     async with aiohttp.ClientSession() as session:
         senec = pysenec.Senec(host, session)
-        await senec.update()
+        if verbose:
+            await senec.read_senec_v21_all()
+        else:
+            await senec.update()
         print(f"System state: {senec.system_state}")
         print(f"House energy use: {senec.house_power / 1000 :.3f} kW")
         print(f"Solar Panel generate: {senec.solar_generated_power / 1000 :.3f} kW")
