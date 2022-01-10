@@ -23,6 +23,15 @@ async def run(host, verbose=False):
         print(
             f"Grid: exported {senec.grid_exported_power / 1000 :.3f} kW, imported {senec.grid_imported_power / 1000 :.3f} kW"
         )
+        print("")
+        print(f"Total house use {senec.house_total_consumption :.3f} kWh")
+        print(f"Total solar generation {senec.solar_total_generated :.3f} kWh")
+        print(
+            f"Total grid imported {senec.grid_total_import :.3f} kWh, export {senec.grid_total_export :.3f} kWh"
+        )
+        print(
+            f"Total battery charged {senec.battery_total_charged :.3f} kWh, discharged {senec.grid_total_export :.3f} kWh"
+        )
         if verbose:
             pprint(senec.raw_status)
 
