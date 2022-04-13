@@ -166,6 +166,31 @@ class Senec:
         """
         return self._raw["STATISTIC"]["LIVE_GRID_IMPORT"]
 
+    @property
+    def wallbox_power(self) -> float:
+        """
+        Wallbox Total Charging Power (W)
+        Derived from the 3 phase voltages multiplied with the phase currents from the wallbox
+
+        """
+        return self._raw["WALLBOX"]["L1_CHARGING_CURRENT"][0] * self._raw["PM1OBJ1"]["U_AC"][0] + self._raw["WALLBOX"]["L2_CHARGING_CURRENT"][0] * self._raw["PM1OBJ1"]["U_AC"][1] + self._raw["WALLBOX"]["L3_CHARGING_CURRENT"][0] * self._raw["PM1OBJ1"]["U_AC"][2]
+
+    @property
+    def wallbox_ev_connected(self) -> bool:
+        """
+        Wallbox EV Connected
+
+        """
+        return self._raw["WALLBOX"]["EV_CONNECTED"][0]
+
+    @property
+    def wallbox_energy(self) -> float:
+        """
+        Wallbox Total Energy
+
+        """
+        return self._raw["STATISTIC"]["LIVE_WB_ENERGY"][0] / 1000.0
+    
     async def update(self):
         await self.read_senec_v21()
 
@@ -203,6 +228,7 @@ class Senec:
             "PWR_UNIT": {"POWER_L1": "", "POWER_L2": "", "POWER_L3": ""},
             "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
             "PM1OBJ2": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
+            "WALLBOX": {"L1_CHARGING_CURRENT": "", "L2_CHARGING_CURRENT": "", "L3_CHARGING_CURRENT": "", "EV_CONNECTED": ""},
         }
 
         async with self.websession.post(self.url, json=form) as res:
