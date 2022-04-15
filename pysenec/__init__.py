@@ -173,14 +173,7 @@ class Senec:
         Derived from the 3 phase voltages multiplied with the phase currents from the wallbox
 
         """
-        return (
-            self._raw["WALLBOX"]["L1_CHARGING_CURRENT"][0]
-            * self._raw["PM1OBJ1"]["U_AC"][0]
-            + self._raw["WALLBOX"]["L2_CHARGING_CURRENT"][0]
-            * self._raw["PM1OBJ1"]["U_AC"][1]
-            + self._raw["WALLBOX"]["L3_CHARGING_CURRENT"][0]
-            * self._raw["PM1OBJ1"]["U_AC"][2]
-        )
+    return self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0] 
 
     @property
     def wallbox_ev_connected(self) -> bool:
@@ -236,7 +229,7 @@ class Senec:
             "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
             "PM1OBJ2": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
             "WALLBOX": {
-                "L1_CHARGING_CURRENT": "",
+                "APPARENT_CHARGING_POWER": "", "L1_CHARGING_CURRENT": "",
                 "L2_CHARGING_CURRENT": "",
                 "L3_CHARGING_CURRENT": "",
                 "EV_CONNECTED": "",
