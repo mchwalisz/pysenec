@@ -185,7 +185,7 @@ class Senec:
     @property
     def mcu_temp(self) -> float:
         """
-        Current case temperature
+        Current controller temperature
 
         """
         return self._raw["TEMPMEASURE"]["MCU_TEMP"]
