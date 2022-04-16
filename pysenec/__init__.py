@@ -166,6 +166,30 @@ class Senec:
         """
         return self._raw["STATISTIC"]["LIVE_GRID_IMPORT"]
 
+    @property
+    def battery_temp(self) -> float:
+        """
+        Current battery temperature
+
+        """
+        return self._raw["TEMPMEASURE"]["BATTERY_TEMP"]
+
+    @property
+    def case_temp(self) -> float:
+        """
+        Current case temperature
+
+        """
+        return self._raw["TEMPMEASURE"]["CASE_TEMP"]
+
+    @property
+    def mcu_temp(self) -> float:
+        """
+        Current case temperature
+
+        """
+        return self._raw["TEMPMEASURE"]["MCU_TEMP"]
+
     async def update(self):
         await self.read_senec_v21()
 
@@ -199,6 +223,11 @@ class Senec:
                 "LIVE_HOUSE_CONS": "",
                 "LIVE_PV_GEN": "",
             },
+            "TEMPMEASURE": {
+                "BATTERY_TEMP": "",
+                "CASE_TEMP": "",
+                "MCU_TEMP": "",
+            },       
             "PV1": {"POWER_RATIO": ""},
             "PWR_UNIT": {"POWER_L1": "", "POWER_L2": "", "POWER_L3": ""},
             "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
