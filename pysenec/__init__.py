@@ -227,7 +227,7 @@ class Senec:
                 "BATTERY_TEMP": "",
                 "CASE_TEMP": "",
                 "MCU_TEMP": "",
-            },       
+            },
             "PV1": {"POWER_RATIO": ""},
             "PWR_UNIT": {"POWER_L1": "", "POWER_L2": "", "POWER_L3": ""},
             "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
