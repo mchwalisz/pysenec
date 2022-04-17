@@ -173,8 +173,7 @@ class Senec:
         Derived from the 3 phase voltages multiplied with the phase currents from the wallbox
 
         """
-
-    return self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
+        return self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
 
     @property
     def wallbox_ev_connected(self) -> bool:
@@ -224,6 +223,7 @@ class Senec:
                 "LIVE_GRID_IMPORT": "",
                 "LIVE_HOUSE_CONS": "",
                 "LIVE_PV_GEN": "",
+                "LIVE_WB_ENERGY": "",
             },
             "PV1": {"POWER_RATIO": ""},
             "PWR_UNIT": {"POWER_L1": "", "POWER_L2": "", "POWER_L3": ""},
