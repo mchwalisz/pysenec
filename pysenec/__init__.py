@@ -19,7 +19,7 @@ class Senec:
 
         """
         value = self._raw["ENERGY"]["STAT_STATE"]
-        return SYSTEM_STATE_NAME[value]
+        return SYSTEM_STATE_NAME.get(value, "UNKNOWN")
 
     @property
     def raw_status(self) -> dict:
