@@ -15,8 +15,10 @@ python = "^3.7"
 aiohttp = "^3.8.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^7.1.2"
 pytest-vcr = "^1.0.2"
+pytest-aiohttp = "^1.0.4"
+pytest-cov = "^3.0.0"
 
 [tool.poetry.scripts]
 senec = "pysenec.cli:main"
