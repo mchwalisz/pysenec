@@ -1,0 +1,17 @@
+interactions:
+- request:
+    body: null
+    headers: {}
+    method: POST
+    uri: http://senec_device_redacted/lala.cgi
+  response:
+    body:
+      string: '{"ENERGY":{"STAT_STATE":"u8_11","GUI_BAT_DATA_POWER":"fl_C3793137","GUI_INVERTER_POWER":"fl_43810000","GUI_HOUSE_POW":"fl_43F4A79B","GUI_GRID_POW":"fl_C1647AE1","GUI_BAT_DATA_FUEL_CHARGE":"fl_422F829D","GUI_CHARGING_INFO":"u8_00","GUI_BOOSTING_INFO":"u8_01","GUI_BAT_DATA_VOLTAGE":"fl_424DF1AA","GUI_BAT_DATA_CURRENT":"fl_C098A3D7","GUI_BAT_DATA_OA_CHARGING":"VARIABLE_NOT_FOUND","STAT_LIMITED_NET_SKEW":"u8_00"},"STATISTIC":{"LIVE_BAT_CHARGE":"fl_44F7AC5D","LIVE_BAT_DISCHARGE":"fl_44EECC27","LIVE_GRID_EXPORT":"fl_452B6AE7","LIVE_GRID_IMPORT":"fl_45F4AAE6","LIVE_HOUSE_CONS":"fl_4656F5FE","LIVE_PV_GEN":"fl_460874EB"},"PV1":{"POWER_RATIO":"u3_00000064"},"PWR_UNIT":{"POWER_L1":["fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000"],"POWER_L2":["fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000"],"POWER_L3":["fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000","fl_00000000"]},"PM1OBJ1":{"FREQ":"fl_42480A3D","U_AC":["fl_43676667","fl_43683333","fl_4367B333"],"I_AC":["fl_3F90A3D7","fl_3FAE147B","fl_3F147AE1"],"P_AC":["fl_C34FFD70","fl_43648A3D","fl_C20B47AE"],"P_TOTAL":"fl_C1647AE1"},"PM1OBJ2":{"FREQ":"fl_00000000","U_AC":["fl_00000000","fl_00000000","fl_00000000"],"I_AC":["fl_00000000","fl_00000000","fl_00000000"],"P_AC":["fl_00000000","fl_00000000","fl_00000000"],"P_TOTAL":"fl_00000000"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status:
+      code: 200
+      message: OK
+    url: http://senec.chwalisz.xyz/lala.cgi
+version: 1
