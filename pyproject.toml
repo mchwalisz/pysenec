@@ -4,6 +4,11 @@ version = "0.2.0"
 description = "Unofficial, local SENEC Battery Client"
 authors = ["Mikołaj Chwalisz <m.chwalisz@gmail.com>"]
 license = "Apache-2.0"
+homepage = "https://github.com/mchwalisz/pysenec"
+repository = "https://github.com/mchwalisz/pysenec"
+keywords = ["senec", "api client"]
+include = ["LICENSE"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"
