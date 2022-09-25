@@ -183,6 +183,27 @@ class Senec:
         return self._raw["STATISTIC"]["LIVE_GRID_IMPORT"]
 
     @property
+    def wallbox_power(self) -> float:
+        """
+        Wallbox Total Charging Power (W)
+        """
+        return self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
+
+    @property
+    def wallbox_ev_connected(self) -> bool:
+        """
+        Wallbox EV Connected
+        """
+        return self._raw["WALLBOX"]["EV_CONNECTED"][0]
+
+    @property
+    def wallbox_energy(self) -> float:
+        """
+        Wallbox Total Energy
+        """
+        return self._raw["STATISTIC"]["LIVE_WB_ENERGY"][0] / 1000.0
+
+    @property
     def battery_temp(self) -> float:
         """
         Current battery temperature
