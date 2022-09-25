@@ -98,3 +98,7 @@ SYSTEM_STATE_NAME = {
     96: "BALANCING",
     97: "SAFETY DISCHARGE",
 }
+
+SYSTEM_TYPE_NAME = {
+    18: "SENEC Home V3 hybrid duo"
+    }
