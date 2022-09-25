@@ -1,17 +1,33 @@
 import aiohttp
 
-from .constants import SYSTEM_STATE_NAME
+from .constants import SYSTEM_STATE_NAME, SYSTEM_TYPE_NAME
 from .util import parse
 
 
 class Senec:
     """Senec Home Battery Sensor"""
-
+    
     def __init__(self, host, websession):
         self.host = host
         self.websession: aiohttp.websession = websession
         self.url = f"http://{host}/lala.cgi"
 
+        self.type=None #variables for late config
+        self.hasWallbox=False
+        self.defaultForm=None
+        self.allForm=None
+
+        self._ident=None
+        self._raw=None
+
+    @property
+    def system_type(self) -> str:
+        """
+        type name of the senec system
+        """
+        
+        return SYSTEM_TYPE_NAME.get(self.type,"UNKNOWN")
+        
     @property
     def system_state(self) -> str:
         """
