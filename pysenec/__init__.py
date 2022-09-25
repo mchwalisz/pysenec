@@ -227,15 +227,30 @@ class Senec:
         """
         return self._raw["TEMPMEASURE"]["MCU_TEMP"]
 
-    async def update(self):
-        await self.read_senec_v21()
+    async def late_config(self):
 
-    async def read_senec_v21(self):
-        """Read values used by webinterface from Senec Home v2.1
+        identForm = {
+            "FACTORY": {
+                "SYS_TYPE": "",
+                "PM_TYPE": "",
+                "CELL_TYPE": "",
+                "BAT_TYPE": "",
+            },
+            "FEATURES": { "CAR" : "", },
+            "PM1OBJ1": { "ENABLED": "",  },
+            "PM1OBJ2": { "ENABLED": "",  },
+            "PM1OBJ3": { "ENABLED": "",  },
+            "PV1" :  { "INTERNAL_MD_MODEL": "", },
+            "WALLBOX" :  { "HW_TYPE":  "" , },
+        }
+        
+        async with self.websession.post(self.url, json=identForm) as res:
+            res.raise_for_status()
+            self._ident = parse(await res.json())
 
-        Note: Not all values are "high priority" and reading everything causes problems with Senec device, i.e. no sync with Senec cloud possible.
-        """
-        form = {
+        # now create forms for the different versions
+        
+        self.defaultForm = {
             "ENERGY": {
                 "STAT_STATE": "",
                 "GUI_BAT_DATA_POWER": "",
@@ -259,6 +274,7 @@ class Senec:
                 "LIVE_GRID_IMPORT": "",
                 "LIVE_HOUSE_CONS": "",
                 "LIVE_PV_GEN": "",
+                "LIVE_WB_ENERGY": "",
             },
             "TEMPMEASURE": {
                 "BATTERY_TEMP": "",
@@ -267,20 +283,9 @@ class Senec:
             },
             "PV1": {"POWER_RATIO": ""},
             "PWR_UNIT": {"POWER_L1": "", "POWER_L2": "", "POWER_L3": ""},
-            "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
-            "PM1OBJ2": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
         }
-
-        async with self.websession.post(self.url, json=form) as res:
-            res.raise_for_status()
-            self._raw = parse(await res.json())
-
-    async def read_senec_v21_all(self):
-        """Read ALL values from Senec Home v2.1
-
-        Note: This causes high demand on the SENEC machine so it shouldn't run too often. Adverse effects: No sync with Senec possible if called too often.
-        """
-        form = {
+    
+        self.allForm = {
             "STATISTIC": {},
             "ENERGY": {},
             "FEATURES": {},
@@ -289,14 +294,66 @@ class Senec:
             "WIZARD": {},
             "BMS": {},
             "BAT1": {},
-            "BAT1OBJ1": {},
-            "BAT1OBJ2": {},
-            "BAT1OBJ2": {},
-            "BAT1OBJ3": {},
-            "BAT1OBJ4": {},
             "PWR_UNIT": {},
             "PV1": {},
         }
+
+        #print(self._ident)
+        
+        # now modify according to version info
+        try:
+            if self._ident["FACTORY"]["SYS_TYPE"] == 18:
+                
+                # try to use same version from SYS_TYPE,
+                # maybe we have to switch to something self defined. 
+                self.type=18
+                
+                if self._ident["WALLBOX"]["HW_TYPE"][0] >0:
+                    self.hasWallbox=True
+                    
+                self.allForm.update({ "BAT1OBJ1": {},})
+                    
+                    
+            if self._ident["PM1OBJ1"]["ENABLED"] == 1:
+                self.defaultForm.update({
+                    "PM1OBJ1": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
+                })
+                self.allForm.update( { "PM1OBJ1": {} , } )
+            
+            if self._ident["PM1OBJ2"]["ENABLED"] == 1:
+                self.defaultForm.update( {
+                    "PM1OBJ2": {"FREQ": "", "U_AC": "", "I_AC": "", "P_AC": "", "P_TOTAL": ""},
+                })
+                self.allForm.update( { "PM1OBJ2": {} , } )
+
+        except (KeyError, ValueError) as e:
+            #maybe we should use logging to put a warning here...
+            print ("error on late_config "+str(e))
+            pass
+        
+        if self.hasWallbox:
+            self.defaultForm.update( {
+                "WALLBOX": {"APPARENT_CHARGING_POWER": "",
+                            "L1_CHARGING_CURRENT": "",
+                            "L2_CHARGING_CURRENT": "",
+                            "L3_CHARGING_CURRENT": "",
+                            "EV_CONNECTED": ""},
+            })
+            self.allForm.update( {
+                            "WALLBOX": {},
+            })
+        
+
+    async def update(self):
+        if not self.type:
+            await self.late_config()
+        await self.read_senec(self.defaultForm)
+
+    async def read_senec(self, form):
+        """Read values used by webinterface from Senec Home v2.1
+
+        Note: Not all values are "high priority" and reading everything causes problems with Senec device, i.e. no sync with Senec cloud possible.
+        """
 
         async with self.websession.post(self.url, json=form) as res:
             res.raise_for_status()
