@@ -187,7 +187,20 @@ class Senec:
         """
         Wallbox Total Charging Power (W)
         """
-        return self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
+        value = self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
+        if value >0:
+            return value
+        return 0
+
+    @property
+    def wallbox_imported_power(self) -> float:
+        """
+        Wallbox Total Discharging Power (W) - currently not useable but needed as dummy for energy dashboard
+        """
+        value = self._raw["WALLBOX"]["APPARENT_CHARGING_POWER"][0]
+        if value <0:
+            return abs(value)
+        return 0
 
     @property
     def wallbox_ev_connected(self) -> bool:
