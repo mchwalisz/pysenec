@@ -35,7 +35,9 @@ async def run(host, verbose=False):
             f"Total battery charged {senec.battery_total_charged :.3f} kWh, discharged {senec.grid_total_export :.3f} kWh"
         )
         if senec.hasWallbox:
-            print(f"Car is connected to Wallbox : { ('No','Yes')[senec.wallbox_ev_connected] } , charging with {senec.wallbox_power : .3f} kW")
+            print(
+                f"Car is connected to Wallbox : { ('No','Yes')[senec.wallbox_ev_connected] } , charging with {senec.wallbox_power : .3f} kW"
+            )
 
         if verbose:
             pprint(senec.raw_status)
