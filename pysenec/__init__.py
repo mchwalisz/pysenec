@@ -10,7 +10,11 @@ class Senec:
     def __init__(self, host, websession):
         self.host = host
         self.websession: aiohttp.websession = websession
-        self.url = f"http://{host}/lala.cgi"
+        if host.startswith("http"):
+            self.url = f"{host}/lala.cgi"
+        else:
+            self.url = f"http://{host}/lala.cgi"
+
 
     @property
     def system_state(self) -> str:
