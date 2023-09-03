@@ -15,7 +15,6 @@ class Senec:
         else:
             self.url = f"http://{host}/lala.cgi"
 
-
     @property
     def system_state(self) -> str:
         """
