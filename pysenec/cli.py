@@ -8,7 +8,9 @@ import pysenec
 
 
 async def run(host, verbose=False):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(
+        connector=aiohttp.TCPConnector(verify_ssl=False)
+    ) as session:
         senec = pysenec.Senec(host, session)
         if verbose:
             await senec.read_senec_v21_all()
