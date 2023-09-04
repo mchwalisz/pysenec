@@ -228,7 +228,6 @@ class Senec:
         return self._raw["TEMPMEASURE"]["MCU_TEMP"]
 
     async def late_config(self):
-
         identForm = {
             "FACTORY": {
                 "SYS_TYPE": "",
@@ -314,7 +313,6 @@ class Senec:
         # now modify according to version info
         try:
             if self._ident["FACTORY"]["SYS_TYPE"] == 18:
-
                 # try to use same version from SYS_TYPE,
                 # maybe we have to switch to something self defined.
                 self.type = 18
