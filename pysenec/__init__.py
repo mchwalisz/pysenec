@@ -10,7 +10,7 @@ class Senec:
     def __init__(self, host, websession):
         self.host = host
         self.websession: aiohttp.websession = websession
-        self.url = f"http://{host}/lala.cgi"
+        self.url = f"https://{host}/lala.cgi"
 
         self.type = None  # variables for late config
         self.hasWallbox = False
@@ -255,8 +255,7 @@ class Senec:
                 "HW_TYPE": "",
             },
         }
-
-        async with self.websession.post(self.url, json=identForm) as res:
+        async with self.websession.post(self.url, json=identForm, ssl=False) as res:
             res.raise_for_status()
             self._ident = parse(await res.json())
 
@@ -399,6 +398,6 @@ class Senec:
         Note: Not all values are "high priority" and reading everything causes problems with Senec device, i.e. no sync with Senec cloud possible.
         """
 
-        async with self.websession.post(self.url, json=form) as res:
+        async with self.websession.post(self.url, json=form, ssl=False) as res:
             res.raise_for_status()
             self._raw = parse(await res.json())
