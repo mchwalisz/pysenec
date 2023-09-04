@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysenec"
-version = "0.3.0.post1"
+version = "0.3.0.post2"
 description = "Unofficial, local SENEC Battery Client"
 authors = ["Mikołaj Chwalisz <m.chwalisz@gmail.com>"]
 license = "Apache-2.0"
