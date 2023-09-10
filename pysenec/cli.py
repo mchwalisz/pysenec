@@ -11,9 +11,11 @@ async def run(host, verbose=False):
     async with aiohttp.ClientSession() as session:
         senec = pysenec.Senec(host, session)
         if verbose:
-            await senec.read_senec_v21_all()
+            await senec.late_config()
+            await senec.read_senec(senec.allForm)
         else:
             await senec.update()
+        print(f"System Type: {senec.type} = {senec.system_type}")
         print(f"System state: {senec.system_state}")
         print(f"House energy use: {senec.house_power / 1000 :.3f} kW")
         print(f"Solar Panel generate: {senec.solar_generated_power / 1000 :.3f} kW")
@@ -24,14 +26,19 @@ async def run(host, verbose=False):
             f"Grid: exported {senec.grid_exported_power / 1000 :.3f} kW, imported {senec.grid_imported_power / 1000 :.3f} kW"
         )
         print("")
-        print(f"Total house use {senec.house_total_consumption :.3f} kWh")
-        print(f"Total solar generation {senec.solar_total_generated :.3f} kWh")
-        print(
-            f"Total grid imported {senec.grid_total_import :.3f} kWh, export {senec.grid_total_export :.3f} kWh"
-        )
-        print(
-            f"Total battery charged {senec.battery_total_charged :.3f} kWh, discharged {senec.grid_total_export :.3f} kWh"
-        )
+        # print(f"Total house use {senec.house_total_consumption :.3f} kWh")
+        # print(f"Total solar generation {senec.solar_total_generated :.3f} kWh")
+        # print(
+        #    f"Total grid imported {senec.grid_total_import :.3f} kWh, export {senec.grid_total_export :.3f} kWh"
+        # )
+        # print(
+        #    f"Total battery charged {senec.battery_total_charged :.3f} kWh, discharged {senec.grid_total_export :.3f} kWh"
+        # )
+        if senec.hasWallbox:
+            print(
+                f"Car is connected to Wallbox : { ('No','Yes')[senec.wallbox_ev_connected] } , charging with {senec.wallbox_power : .3f} kW"
+            )
+
         if verbose:
             pprint(senec.raw_status)
 

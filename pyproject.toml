@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysenec"
-version = "0.3.0"
+version = "0.3.0.post2"
 description = "Unofficial, local SENEC Battery Client"
 authors = ["Mikołaj Chwalisz <m.chwalisz@gmail.com>"]
 license = "Apache-2.0"
@@ -24,8 +24,10 @@ pytest-cov = "^3.0.0"
 senec = "pysenec.cli:main"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+#requires = ["poetry>=0.12"]
+#build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 addopts = "--vcr-record=none"
